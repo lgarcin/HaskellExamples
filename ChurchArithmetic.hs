@@ -8,6 +8,7 @@ import ChurchBoolean
   ( CB,
     churchFalse,
     churchTrue,
+    unchurchBoolean,
   )
 
 type CI = forall a. (a -> a) -> (a -> a)
@@ -46,6 +47,7 @@ zero :: CI
 zero f x = x
 
 churchIsEqual :: CI -> CI -> CB
-churchIsEqual zero b = churchIsZero b
-churchIsEqual a zero = churchIsZero a
-churchIsEqual a b = churchIsEqual (churchPred a) (churchPred b)
+churchIsEqual a b
+  | unchurchBoolean (churchIsZero a) = churchIsZero b
+  | unchurchBoolean (churchIsZero b) = churchIsZero a
+  | otherwise = churchIsEqual (churchPred a) (churchPred b)
