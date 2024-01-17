@@ -1,7 +1,3 @@
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE Rank2Types #-}
-{-# LANGUAGE TypeFamilies #-}
-
 module ChurchBoolean where
 
 type CB = forall a. a -> a -> a
@@ -17,13 +13,13 @@ churchAnd :: CB -> CB -> CB
 churchAnd a b = a b a
 
 churchOr :: CB -> CB -> CB
-churchOr a = a a
+churchOr a b = a a b
 
 churchXor :: CB -> CB -> CB
 churchXor a b = a (churchNot b) b
 
 churchIfThenElse :: CB -> CB -> CB -> CB
-churchIfThenElse m = m
+churchIfThenElse m a b = m a b
 
 churchIff :: CB -> CB -> CB
 churchIff a b = a b (churchNot b)
